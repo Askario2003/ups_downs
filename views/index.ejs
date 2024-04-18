@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life's Ups & Downs Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css"> <!-- Подключение стилей -->
+
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            const darkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', darkMode);
+            console.log('Dark mode toggled');
+            console.log('Current mode:', darkMode ? 'Dark' : 'Light');
+            const darkModeButton = document.getElementById('darkModeButton');
+            darkModeButton.textContent = darkMode ? 'Toggle Light Mode' : 'Toggle Dark Mode';
+            darkModeButton.style.color = darkMode ? '#fff' : '#333';
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                const darkModeButton = document.getElementById('darkModeButton');
+                darkModeButton.textContent = 'Toggle Light Mode';
+                darkModeButton.style.color = '#fff';
+                console.log('Dark mode loaded from localStorage');
+            }
+        }
+    </script>
+</head>
+<body class="<%= darkMode ? 'dark-mode' : '' %>"> <!-- Применяем класс темы к body -->
+    <div class="container">
+        <div class="page-header">
+            <button id="darkModeButton" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+            <h1>Life's Ups & Downs</h1>
+            <p>Share your success and failure stories with the world</p>
+            <a href="/add" class="add-button">Add Story</a> <!-- Ссылка на добавление истории -->
+        </div>
+        
+
+        <ul class="story-list">
+            <% stories.forEach(function(story) { %>
+                <li class="story-item">
+                    <h2 class="story-title"><%= story.title %></h2>
+                    <p class="story-content"><%= story.content %></p>
+                    <p class="story-author">By: <%= story.author %></p>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+</body>
+</html>
